@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Elsie&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand-dark: #0F0C27;
+      --pale: #F7E7B3;      /* pale yellow you used */
+      --accent: #D68240;    /* orange */
+      --gold: #C4AE45;
+      --muted: #6d6d6d;
+      --card-bg: #fff;
+      --container-width: 1200px;
+    }
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0; font-family:'Roboto',sans-serif; color:var(--brand-dark);
+      background:var(--pale);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ---------- NAVBAR (reused) ---------- */
+    .custom-navbar{
+      position:fixed; top:0; left:0; width:100%; z-index:1200;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:18px 32px; gap:12px; background:transparent;
+    }
+    .font-size{ width:110px; height:auto; display:block; }
+    .navbar-links{ display:flex; gap:14px; align-items:center; }
+    .nav-link{
+      text-decoration:none; color:var(--card-bg); font-family:'Elsie',serif;
+      font-size:16px; opacity:0.9; transition:color .2s ease;padding: 0 12px;
+    }
+    .nav-link:hover{ color:var(--gold) }
+
+    .container{ max-width:var(--container-width); margin:0 auto; padding:0 24px; }
+
+    /* ---------- MAIN HERO (.main-section) ---------- */
+    .main-section{
+      position:relative;
+      min-height:540px;
+      margin-top:0px; /* room for fixed nav */
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+    }
+    /* background svg wrapper */
+    .hero-art{
+      width:100%;
+      height:950px;
+      display:block;
+      background: transparent center/cover no-repeat;
+      position:relative;
+    }
+    /* If you prefer to use an <img>, we contain and set object-fit */
+    .hero-art img{
+      width:100%;
+      height:950px;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* Heading on top of SVG (left side) */
+    .hero-heading{
+      position:absolute;
+      left:8%;
+      top:18%;
+      max-width:540px;
+      font-family:'Abril Fatface', serif;
+      font-size:100px; /* as requested */
+      line-height:1.2;
+      color:var(--brand-dark);
+      letter-spacing:0;
+      margin:0;
+    }
+    /* emphasize 'Voice' with gold */
+    .hero-heading .accent{ color:var(--gold); }
+
+
+    /* ---------- REVIEW INPUT SECTION ---------- */
+    .review-section{
+      background:var(--pale);
+      padding:56px 0 40px;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+    .review-wrap{
+      max-width:1100px; margin:0 auto; padding:100px 24px;
+    }
+    .review-title{
+      font-family:'Abril Fatface', serif;
+      font-size:42px; margin:0 0 8px; color:var(--brand-dark);
+    }
+    .review-desc{
+      font-family:'Elsie', serif;
+      font-size:18px; color:var(--brand-dark); margin:0 0 24px;
+    }
+
+    .review-form{
+      display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap;
+    }
+    .input{
+      padding:12px 14px; border-radius:6px; border:1px solid rgba(15,12,39,0.08);
+      background:#fff; min-width:220px; font-size:14px;
+    }
+    .input.textarea{ min-height:56px; width:100%; padding:14px; resize:vertical; }
+
+    .rating-wrap{ display:flex; flex-direction:column; gap:8px; min-width:200px; }
+    .stars{ display:flex; gap:8px; font-size:20px; cursor:pointer; }
+    .star{ user-select:none; }
+
+    .submit-btn{
+      background:var(--accent); color:#fff; border:none; padding:10px 18px; border-radius:6px; cursor:pointer;
+      font-weight:700; margin-left:6px;
+    }
+
+    /* ---------- CUSTOMER REVIEWS CAROUSEL ---------- */
+    .reviews-carousel{
+      background:var(--brand-dark);
+      color:var(--pale);
+      padding:100px 0;
+    }
+    .carousel-inner{ max-width:1100px; margin:0 auto; padding:0 24px; position:relative; }
+    .carousel-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; gap:12px; }
+    .carousel-header h3{ margin:0; font-family:'Abril Fatface', serif; font-size:28px; color:var(--pale); }
+    .carousel-header p{ margin:0; font-family:'Elsie', serif; color:rgba(255,255,255,0.85); }
+
+    .cards-track{
+      display:flex; gap:18px; overflow:hidden; scroll-behavior:smooth;
+    }
+    .review-card{
+      min-width:400px; max-width:320px;
+      background:#fff; color:var(--brand-dark);
+      border-radius:8px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,0.12);
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .review-meta{ display:flex; gap:12px; align-items:center; }
+    .review-meta img{ width:48px; height:48px; border-radius:50%; object-fit:cover; }
+    .review-name{ font-weight:800; font-family:'Elsie', serif; }
+    .review-place{ font-size:12px; color:var(--muted); }
+
+    .review-text{ font-size:14px; color:#333; line-height:1.45; margin-top:6px; flex:1; }
+
+    .review-footer { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:10px; }
+    .small-date{ font-size:12px; color:var(--muted); }
+
+    /* carousel nav */
+    .carousel-arrows{ display:flex; gap:8px; }
+    .circle-btn{ width:48px; height:48px; border-radius:50%; background:var(--pale); border:none; cursor:pointer; display:grid; place-items:center; font-weight:700; }
+
+    /* ---------- QUESTIONNAIRE SECTION ---------- */
+    .questionnaire{
+      padding:100px 0;
+      background:var(--pale);
+    }
+    .q-wrap{ max-width:1100px; margin:0 auto; padding:0 24px; }
+    .q-title{ font-family:'Abril Fatface', serif; font-size:36px; margin-bottom:12px; text-align:center; }
+    .q-form{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; align-items:start; justify-items:stretch; margin-top:12px; }
+    .q-form .full{ grid-column: 1 / -1; }
+
+    .q-submit{ background:var(--accent); color:white; padding:10px 18px; border-radius:6px; border:none; cursor:pointer; width:140px; justify-self:end; }
+
+    /* ---------- EVENT PLANNING SECTION ---------- */
+    .event-section{
+      padding:48px 0 80px;
+      background:var(--pale);
+      display:flex; justify-content:center; align-items:center; flex-direction:column; gap:18px;
+    }
+    .event-title{ font-family:'Abril Fatface', serif; font-size:36px; margin:0; }
+    .event-desc{ font-family:'Elsie', serif; font-size:18px; color:var(--muted); max-width:780px; text-align:center; margin:0; }
+    .event-cta{ padding:10px 18px; border-radius:6px; background:var(--accent); color:white; border:none; cursor:pointer; font-family:'Roboto',sans-serif; font-weight:700; }
+
+    .team-art{ width:100%; max-width:900px; margin-top:8px; }
+    .team-art img{ width:100%; display:block; object-fit:contain; }
+
+    /* ---------- FOOTER (reused structure) ---------- */
+    .footer{
+      background:var(--brand-dark);
+      color:var(--pale); padding:40px 30px; display:flex; flex-wrap:wrap;
+      justify-content:space-between; align-items:flex-start;
+    }
+    .footer-nav{ display:flex; gap:10px; }
+    .footer-link{ text-decoration:none; color:var(--pale) !important; font-family:'Elsie',serif; font-size:16px; transition:.3s; }
+    .footer-link:hover{ color:var(--gold) !important; }
+    .footer-brand{ font-family:'Abril Fatface',serif; font-size:28px; font-weight:700; text-align:center; flex:1; }
+    .footer-social{ display:flex; gap:18px; }
+    .footer-icon img{ width:26px; height:26px; filter:grayscale(.3); transition:.2s; }
+    .footer-icon:hover img{ filter:grayscale(0) brightness(1.2); }
+    .footer-newsletter input[type="text"]{ padding:8px 12px; border-radius:20px; border:1px solid var(--brand-dark); background:#fffbe6; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width:1100px){
+      .hero-heading{ font-size:72px; left:6%; top:20%; max-width:420px; }
+      .review-form{ flex-direction:column; }
+      .cards-track{ gap:12px; }
+    }
+    @media (max-width:800px){
+      .hero-heading{ font-size:48px; }
+      .q-form{ grid-template-columns:1fr; }
+      .review-card{ min-width:280px; max-width:100%; }
+    }
+    @media (max-width:420px){
+      .hero-heading{ font-size:36px; left:6%; top:14%; }
+      .hero-art img{ height:420px; object-position:center; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR (reused header) -->
+  <nav class="custom-navbar">
+    <a class="navbar-brand" href="#"><img src="font-01.svg" alt="AudioBytes" class="font-size"></a>
+    <div class="navbar-links">
+      <a class="nav-link" href="figmapg.html#page-general">General</a>
+      <a class="nav-link" href="experiments.html">Team</a>
+      <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="menu.html">Menu</a>
+      <a class="nav-link" href="payment.html#payment-modal">Checkout</a>
+      <a class="nav-link" href="payment.html#events">Event</a>
+      <a class="nav-link" href="review.html">Review</a>
+      <a class="nav-link" href="review.html#questionaire">Contact</a>
+    </div>
+  </nav>
+
+  <!-- MAIN HERO with SVG background + heading -->
+  <section class="main-section" aria-label="Review hero">
+    <div class="hero-art" aria-hidden="true">
+      <!-- Replace filename if your svg name differs. I used reflect_review-01-1.svg -->
+      <img src="REFLECT_REVIEW-01.svg" alt="decorative artwork" />
+    </div>
+
+    <!-- Heading overlay -->
+    <h1 class="hero-heading">Your <span class="accent">Voice</span><br>makes <br>our melody<br>complete.</h1>
+  </section>
+
+  <!-- REVIEW INPUT SECTION -->
+  <section class="review-section" id="user-review">
+    <div class="review-wrap container">
+      <h2 class="review-title">Every bite, every note—your story matters.</h2>
+      <p class="review-desc">Your story matters. We listen beyond the music, to you.</p>
+
+      <form class="review-form" id="reviewForm" onsubmit="return false;">
+        <input class="input" type="text" name="fullname" placeholder="Full Name" required>
+        <input class="input" type="text" name="place" placeholder="Place" required>
+        <textarea class="input textarea" name="details" placeholder="Tell us about your experiences in AudioBites" required></textarea>
+
+        <div class="rating-wrap" style="margin-left:auto;">
+          <label style="font-weight:700; font-size:14px; margin-bottom:6px;">Rating</label>
+          <div class="stars" id="ratingStars" aria-label="Rating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button type="submit" class="submit-btn" onclick="submitReview()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- CUSTOMER REVIEWS CAROUSEL -->
+  <section class="reviews-carousel" aria-label="Customer reviews">
+    <div class="carousel-inner container">
+      <div class="carousel-header">
+        <div>
+          <h3>Customer Reviews</h3>
+          <p>What our guests say — real stories from real visits.</p>
+        </div>
+        <div class="carousel-arrows">
+          <button class="circle-btn" id="carouselPrev" aria-label="Previous">‹</button>
+          <button class="circle-btn" id="carouselNext" aria-label="Next">›</button>
+        </div>
+      </div>
+
+      <div class="cards-track" id="cardsTrack">
+        <!-- Card 1 -->
+        <article class="review-card">
+          <div class="review-meta">
+            <img src="team1.jpg" alt="Reviewer 1">
+            <div>
+              <div class="review-name">St Gix</div>
+              <div class="review-place">South London · 24th September, 2023</div>
+            </div>
+          </div>
+          <div class="review-text">The positive aspect was undoubtedly the efficiency of the service. The queue moved quickly, the staff was friendly, and the food was up to the usual standard — hot and satisfying.</div>
+          <div class="review-footer">
+            <div>★★★★★</div>
+            <div class="small-date">Dined: Sep 2023</div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="review-card">
+          <div class="review-meta">
+            <img src="team8.jpg" alt="Reviewer 2">
+            <div>
+              <div class="review-name">A. Morgan</div>
+              <div class="review-place">Notting Hill · 12th Oct, 2023</div>
+            </div>
+          </div>
+          <div class="review-text">Music and food combined seamlessly — the playlist and the chef’s menu felt made for each other. Warm, welcoming staff.</div>
+          <div class="review-footer">
+            <div>★★★★★</div>
+            <div class="small-date">Dined: Oct 2023</div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="review-card">
+          <div class="review-meta">
+            <img src="team7.jpg" alt="Reviewer 3">
+            <div>
+              <div class="review-name">S. Lee</div>
+              <div class="review-place">Shoreditch · 18th Nov, 2023</div>
+            </div>
+          </div>
+          <div class="review-text">Cozy corners and a lively acoustic night — loved the vegetarian options and the attentive staff.</div>
+          <div class="review-footer">
+            <div>★★★★☆</div>
+            <div class="small-date">Dined: Nov 2023</div>
+          </div>
+        </article>
+
+        <!-- Add more cards as needed (carousel scroll will reveal them) -->
+      </div>
+    </div>
+  </section>
+
+  <!-- QUESTIONNAIRE -->
+  <section class="questionnaire" aria-label="Questionnaire" id="questionaire">
+    <div class="q-wrap container">
+      <h2 class="q-title">What's on your mind?</h2>
+      <form id="questionForm" class="q-form" onsubmit="return false;">
+        <input class="input full" type="text" name="qname" placeholder="Full Name" required>
+        <input class="input" type="text" name="qplace" placeholder="Place" required>
+        <input class="input" type="text" name="phone" placeholder="Phone No">
+        <input class="input" type="email" name="email" placeholder="Email">
+        <input class="input full" type="text" name="query" placeholder="Query" required>
+        <button class="q-submit" type="submit" onclick="submitQuery()">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- EVENT PLANNING SECTION -->
+  <section class="event-section" aria-label="Event planning">
+    <h2 class="event-title">Planning an event?</h2>
+    <p class="event-desc">Let our team create the perfect blend of food and live music for your occasion. From intimate gatherings to lively celebrations — we’ll handle everything.</p>
+    <button class="event-cta" onclick="location.href='payment.html#events'">Yes — Plan my event</button>
+
+    <div class="team-art">
+      <!-- team-01.svg image below (replace filename as required) -->
+      <img src="team-01.svg" alt="Team illustration">
+    </div>
+  </section>
+
+  <!-- FOOTER (reused) -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-nav">
+        <a href="figmapg.html#page-general" class="footer-link">General</a>
+        <a href="experiments.html" class="footer-link">Team</a>
+      <a href="overview.html" class="footer-link">Overview</a>
+      <a href="menu.html" class="footer-link">Menu</a>
+      <a href="figmapg.html#page-general" class="footer-link">Review</a>
+      <a href="payment.html#events" class="footer-link">Event</a>
+      <a href="contact.html" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-brand-social">
+      <div class="footer-brand">AUDIOBYTES</div>
+      <div class="footer-social" style="margin-top:12px;">
+        <a href="https://www.instagram.com" class="footer-icon"><img src="instagram-svgrepo-com.svg" alt="Instagram" /></a>
+        <a href="https://www.facebook.com" class="footer-icon"><img src="facebook-svgrepo-com (1).svg" alt="Facebook" /></a>
+        <a href="https://www.twitter.com" class="footer-icon"><img src="twitter-svgrepo-com.svg" alt="Twitter" /></a>
+        <a href="https://www.youtube.com" class="footer-icon"><img src="youtube-svgrepo-com.svg" alt="YouTube" /></a>
+      </div>
+    </div>
+    <form class="footer-newsletter" style="margin-top:8px;">
+      <label for="newsletter-email" style="font-size:14px">Sign up to our newsletter</label>
+      <input type="text" id="newsletter-email" placeholder="Enter Email" style="background-color: transparent;border-width: 0px; padding:8px 10px;" />
+    </form>
+  </footer>
+
+  <!-- JS for interactions -->
+  <script>
+    // Simple rating stars behavior
+    (function(){
+      const stars = document.querySelectorAll('#ratingStars .star');
+      let selected = 0;
+      stars.forEach(s => {
+        s.addEventListener('click', () => {
+          selected = Number(s.dataset.value);
+          updateStars();
+        });
+        s.addEventListener('mouseenter', () => {
+          const v = Number(s.dataset.value);
+          highlightStars(v);
+        });
+      });
+      document.getElementById('ratingStars').addEventListener('mouseleave', () => {
+        updateStars();
+      });
+      function highlightStars(v){
+        stars.forEach(st => st.style.color = Number(st.dataset.value) <= v ? 'gold' : 'rgba(0,0,0,0.12)');
+      }
+      function updateStars(){
+        stars.forEach(st => st.style.color = Number(st.dataset.value) <= selected ? 'gold' : 'rgba(0,0,0,0.12)');
+      }
+      updateStars();
+      // expose for submit
+      window.getSelectedRating = () => selected;
+    })();
+
+    // Review submit demo (you can wire to server)
+    function submitReview(){
+      const form = document.getElementById('reviewForm');
+      const data = new FormData(form);
+      const rating = window.getSelectedRating ? window.getSelectedRating() : 0;
+      // demo: just show data
+      alert('Thanks!\\nName: ' + data.get('fullname') + '\\nPlace: ' + data.get('place') + '\\nRating: ' + rating + '\\n\\n(Integrate with backend to save reviews.)');
+      form.reset();
+      // reset rating
+      const evt = new Event('mouseleave');
+      document.getElementById('ratingStars').dispatchEvent(evt);
+    }
+
+    // Question form submit
+    function submitQuery(){
+      const form = document.getElementById('questionForm');
+      const data = new FormData(form);
+      alert('Thanks for reaching out, ' + data.get('qname') + '!\\nWe will contact you soon.');
+      form.reset();
+    }
+
+    // Carousel scroll logic
+    (function(){
+      const track = document.getElementById('cardsTrack');
+      const prev = document.getElementById('carouselPrev');
+      const next = document.getElementById('carouselNext');
+
+      const cardWidth = 338; // card width + gap approx (tweak if needed)
+      prev.addEventListener('click', () => {
+        track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+      });
+      next.addEventListener('click', () => {
+        track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      });
+    })();
+
+    // Ensure page starts at top on reload (like reference)
+    window.onbeforeunload = () => window.scrollTo(0,0);
+  </script>
+</body>
+</html>

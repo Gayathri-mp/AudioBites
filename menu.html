@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Menu - AudioBites</title>
+
+  <!-- Fonts used in your reference -->
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=David+Libre&family=Gloock&family=Roboto:wght@300;400;700&family=Elsie&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --red-bg: #7A1C1C;     /* hero + header */
+      --light-bg: #E7E9E4;   /* page background */
+      --brand: #D68240;      /* orange brand */
+      --accent: #C4AE45;     /* gold accents */
+      --ink: #0F0C27;
+      --muted: #9aa3aa;
+      --card-bg: #ffffff;
+      --shadow: rgba(12,12,12,0.12);
+      --container-width: 1200px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; padding:0; font-family:'Roboto',sans-serif;
+      background:var(--light-bg); color:var(--ink);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ---------- Navbar (reused structure from your reference) ---------- */
+    .custom-navbar{
+      position:fixed; top:0; left:0; width:100%; z-index:1200;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:16px 28px; gap:12px;
+      background:transparent;
+    }
+    .font-size{ width:100px; height:auto; display:block; }
+    .navbar-links{ display:flex; gap:14px; align-items:center; }
+    .nav-link{
+      text-decoration:none; color:#fdfdfd; font-family:'Elsie',serif;
+      font-size:18px; opacity:0.95; transition:color .3s ease;padding: 0 15px;
+    }
+    .nav-link:hover{ color:var(--accent) }
+
+    /* container helper like your reference */
+    .container{ max-width:var(--container-width); margin:0 auto; padding:0 24px; }
+
+    /* ---------- HERO / MENU HEADER ---------- */
+    .menu-hero{
+      background:var(--red-bg);
+      position:relative;
+      padding-top:30px; /* room for fixed nav */
+      min-height:720px; /* large hero like Figma */
+      overflow:hidden;
+    }
+    
+    .hero-inner{
+      display:flex; align-items:center; justify-content: space-between; gap:30px;
+      max-width:var(--container-width); margin:0 auto; padding:20px 30px;
+    }
+
+    /* left artwork: make it very large and centered vertically */
+    .hero-left{
+      flex:2 1 0%;
+      display:flex; align-items:center; justify-content:left;
+        padding:20px 10px;
+
+    }
+    .hero-left img{
+        height:auto;
+        width:1000px;
+        object-fit:contain;
+    }
+
+    /* right menu column (positioned to the right like Figma) */
+    .menu-right{
+      width:260px;
+      display:flex; flex-direction:column; align-items:center;
+      gap:18px;
+      margin-left:12px;
+      position:relative;
+      /* lift to appear visually centered inside hero */
+      padding-top:0px;
+    }
+
+    .menu-title{
+      font-family:'Gloock', serif;
+      color: #EADDBA; /* pale gold text matching figma */
+      font-size:80px; letter-spacing:1px;
+      margin:8px 0 6px;
+      position:absolute; top:18px; left:50%; transform:translate(-300%,70%) ;
+    }
+
+    /* circular arrow controls above & below the menu list */
+    .arrow-circle{
+      width:48px; height:48px; border-radius:50%;
+      border:1px solid rgba(255,255,255,0.15);
+      display:grid; place-items:center; cursor:pointer;
+      background:transparent; color:#EADDBA; font-weight:700;
+      transition:transform .15s;
+    }
+    .arrow-circle:hover{ transform:translateY(-3px) }
+
+    /* watch-video image aligns above menu items */
+    .watch-video{
+      margin-bottom:6px;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+    }
+
+    /* scrollable menu list */
+    .menu-list{
+      width:100%;
+      max-height:360px;
+      overflow-y: scroll;        /* scrolling still works */
+      scrollbar-width: none;
+      display:flex; flex-direction:column; gap:16px;
+      padding:10px 6px;
+      align-items:center;
+    }
+    /* style for each menu button */
+    .menu-btn{
+      width:200px;
+      background:transparent;
+      border:1.5px solid rgba(196,174,69,0.8);
+      color:#EADDBA;
+      padding:14px 16px;
+      border-radius:14px;
+      font-weight:700;
+      cursor:pointer;
+      font-size:18px;
+      letter-spacing:.02em;
+      transition: all .18s;
+    }
+    .menu-btn:hover{ background:rgba(196,174,69,0.08); color:white; transform:translateX(2px); }
+
+    /* Up/down small spacing for bottom arrow circle */
+    .menu-right .bottom-space{ height:10px }
+
+    /* ---------- GRAB YOUR FOOD SECTION ---------- */
+    section.food-section{
+      padding:72px 0 36px;
+      background:var(--light-bg);
+    }
+    .grab-heading{
+      text-align:center; margin:0 0 34px;
+      font-family:'Abril Fatface', cursive;
+      font-size:56px; color:var(--ink);
+      letter-spacing:0.01em;
+    }
+
+    /* wrapper to control width of card grid like the reference */
+    .cards-wrapper{
+      width:100%;
+      max-width:1100px; margin:0 auto;
+      padding:0 16px;
+    }
+
+    .food-grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:26px;
+      align-items:start;
+      justify-items:center;
+    }
+
+    /* Food Card */
+    .food-card{
+      width:100%;
+      max-width:260px;
+      background:var(--card-bg);
+      border-radius:14px;
+      box-shadow: 0 10px 25px var(--shadow);
+      overflow:hidden;
+      position:relative;
+      display:flex; flex-direction:column;
+    }
+
+    .card-media{
+      position:relative; width:100%; height:170px; overflow:hidden;
+      border-top-left-radius:14px; border-top-right-radius:14px;
+    }
+    .card-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* small badges */
+    .badge{
+      position:absolute; left:12px; top:12px; padding:6px 8px; border-radius:8px;
+      font-size:12px; color:#fff; font-weight:700;
+      background:#39A84D; box-shadow:0 6px 14px rgba(0,0,0,0.16);
+    }
+    .badge.sold{ background:#2b2b2b; }
+
+    /* heart icon top-right */
+    .fav{
+      position:absolute; right:12px; top:12px; width:28px; height:28px;
+      border-radius:50%; background:rgba(255,255,255,0.95); display:grid; place-items:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.12); cursor:pointer;
+    }
+    .fav svg{ width:14px; height:14px; fill:#e74c3c; opacity:0.9 }
+
+    .food-body{
+      padding:14px 16px 18px; display:flex; flex-direction:column; gap:6px; flex:1;
+    }
+    .stars{ color:#d6d9dc; font-size:12px; letter-spacing:1px; }
+    .food-title{ font-family:'Gloock', serif; font-size:16px; margin:6px 0 2px; color:var(--ink); }
+    .food-meta{ font-size:13px; color:var(--muted); margin-bottom:8px; }
+
+    .card-footer{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:auto; }
+    .price{ font-weight:800; color:#198754; font-size:15px; }
+    .old-price{ color:#a7a9ab; text-decoration:line-through; font-size:13px; margin-left:8px; font-weight:500 }
+
+    .add-to-bag{
+      background:transparent; border:none; padding:8px; cursor:pointer;
+      border-radius:8px; box-shadow:0 6px 14px rgba(0,0,0,0.08);
+      display:flex; align-items:center; gap:8px;
+    }
+    .add-to-bag .bag-circle{
+      width:34px; height:34px; border-radius:50%; background:#f3f3f3; display:grid; place-items:center;
+    }
+    .add-to-bag.added .bag-circle{ background:var(--brand) }
+    .add-to-bag.added .bag-text{ color:var(--brand); font-weight:700 }
+
+    /* Place order button: outside the card container */
+    .place-order-wrap{ text-align:center; margin-top:40px; margin-bottom:56px; }
+    .place-order{
+      background:var(--brand); color:#fff; border:none; padding:12px 26px; border-radius:8px;
+      cursor:pointer; font-weight:800; letter-spacing:.02em; box-shadow:0 8px 20px rgba(0,0,0,0.12);
+    }
+    .place-order:disabled{ opacity:0.6; cursor:not-allowed; }
+
+    /* ---------- Footer (recreated & aligned to reference layout) ---------- */
+    .footer{
+      background:var(--red-bg);
+      color:var(--light-bg); padding:40px 30px; display:flex; flex-wrap:wrap;
+      justify-content:space-between; align-items:flex-start;
+    }
+    .footer-nav{ display:flex; gap:10px; }
+    .footer-link{
+      text-decoration:none; color:#fdfdfd !important; font-family:'Elsie',serif; font-size:18px; transition:.3s;
+    }
+    .footer-link:hover{ color:var(--accent) !important; }
+    .footer-brand{ font-family:'Gloock',serif; font-size:32px; font-weight:700; text-align:center; flex:1; }
+    .footer-brand-social{ display:flex; flex-direction:column; align-items:center; }
+    .footer-social{ display:flex; gap:18px; }
+    .footer-social a{ padding:10px; margin-top:20px; }
+    .footer-icon img{ width:28px; height:28px; filter:grayscale(.3); transition:.2s; }
+    .footer-icon:hover img{ filter:grayscale(0) brightness(1.2); }
+    .footer-newsletter{ display:flex; flex-direction:column; gap:8px; }
+    .footer-newsletter input[type="text"],
+    .footer-newsletter input[type="email"]{
+      padding:8px 16px; border-radius:20px; border:1px solid var(--brand); background:#fffbe6; font-family:'Roboto',sans-serif;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width:1100px){
+      .food-grid{ grid-template-columns: repeat(3, 1fr); }
+      .menu-right{ width:220px; }
+    }
+    @media (max-width:900px){
+      .hero-inner{flex-direction:column; padding:32px}
+      .hero-left img{ max-width:680px }
+      .menu-right{ position:static; width:100%; display:flex; flex-direction:row; justify-content:center; gap:20px; padding-bottom:18px }
+      .menu-list{ max-height:120px; flex-direction:row; overflow-x:auto; overflow-y:hidden; gap:10px; padding:6px }
+      .menu-btn{ width:124px }
+      .food-grid{ grid-template-columns:repeat(2,1fr); gap:18px }
+      .grab-heading{ font-size:40px }
+    }
+    @media (max-width:560px){
+      .food-grid{ grid-template-columns: 1fr; justify-items:center }
+      .hero-left img{ max-width:420px }
+      .grab-heading{ font-size:34px }
+      .footer-newsletter{ width:100%; align-items:flex-start }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR (reused header) -->
+  <nav class="custom-navbar">
+    <a class="navbar-brand" href="#"><img src="font-01.svg" alt="AudioBytes" class="font-size"></a>
+    <div class="navbar-links">
+      <a class="nav-link" href="figmapg.html#page-general">General</a>
+      <a class="nav-link" href="experiments.html">Team</a>
+      <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="menu.html">Menu</a>
+      <a class="nav-link" href="payment.html">Checkout</a>
+      <a class="nav-link" href="payment.html#events">Event</a>
+      <a class="nav-link" href="review.html">Review</a>
+      <a class="nav-link" href="review.html#questionaire">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO with left artwork and right menu list -->
+  <header class="menu-hero" aria-hidden="false">
+        <div class="menu-title">MENU</div>
+    <div class="hero-inner container">
+        <!-- watch video icon -->      
+      <div class="hero-left">  
+    <img src="watch_video-01.svg" alt="Watch video" class="watch-video"/>
+      </div>
+
+      <!-- Right column: MENU title + watch_video + scrollable list + arrows -->
+      <div class="menu-right" aria-label="Menu categories">
+        <!-- up arrow -->
+        <button class="arrow-circle" id="menu-up" title="Scroll up" aria-label="Scroll menu up">▲</button>
+
+        <!-- scrollable menu item list -->
+        <div class="menu-list" id="menuList">
+          <button class="menu-btn" onclick="location.href='#menu'">Appetizers</button>
+          <button class="menu-btn" onclick="location.href='#menu'">Pasta</button>
+          <button class="menu-btn" onclick="location.href='#menu'">Pizza</button>
+          <button class="menu-btn" onclick="location.href='#menu'">Salads</button>
+          <button class="menu-btn" onclick="location.href='#menu'">Soups</button>
+          <button class="menu-btn" onclick="location.href='#menu'">Desserts</button>
+          <button class="menu-btn" onclick="location.href='#menu'">Drinks</button>
+          <button class="menu-btn" onclick="location.href='#menu'">Specials</button>
+          <button class="menu-btn" onclick="location.href='#menu'">Kids</button>
+        </div>
+
+        <!-- down arrow -->
+        <div class="menu-right-bottom">
+          <button class="arrow-circle" id="menu-down" title="Scroll down" aria-label="Scroll menu down">▼</button>
+        </div>
+    </div>
+    </div>
+  </header>
+
+  <!-- Grab Your Food -->
+  <section class="food-section" id="menu">
+    <h2 class="grab-heading">Grab Your Food !</h2>
+
+    <div class="cards-wrapper">
+      <div class="food-grid" id="foodGrid">
+
+        <!-- Card 1 -->
+        <article class="food-card" data-id="1">
+          <div class="card-media">
+            <img src="food1.png" alt="Green Broccoli">
+            <div class="badge">-15%</div>
+            <div class="fav" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.1-7.2C.9 10.9 3 7 6.4 7c1.8 0 3.2.9 4 2 .8-1.1 2.2-2 4-2 3.4 0 5.5 3.9 3.5 6.8C19.5 16.1 12 21 12 21z"/></svg></div>
+          </div>
+          <div class="food-body">
+            <div class="stars">★★★★★</div>
+            <div class="food-title">Green Broccoli</div>
+            <div class="food-meta">Fresh & healthy</div>
+            <div class="card-footer">
+              <div>
+                <span class="price">$8.00</span>
+                <span class="old-price">$9.50</span>
+              </div>
+              <button class="add-to-bag" data-id="1" title="Add to bag">
+                <span class="bag-circle">🛍️</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="food-card" data-id="2">
+          <div class="card-media">
+            <img src="food2.png" alt="Purple Onion">
+            <div class="badge">-23%</div>
+            <div class="fav" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.1-7.2C.9 10.9 3 7 6.4 7c1.8 0 3.2.9 4 2 .8-1.1 2.2-2 4-2 3.4 0 5.5 3.9 3.5 6.8C19.5 16.1 12 21 12 21z"/></svg></div>
+          </div>
+          <div class="food-body">
+            <div class="stars">★★★★★</div>
+            <div class="food-title">Purple Onion</div>
+            <div class="food-meta">Chef special</div>
+            <div class="card-footer">
+              <div>
+                <span class="price">$10.00</span>
+                <span class="old-price">$12.00</span>
+              </div>
+              <button class="add-to-bag" data-id="2" title="Add to bag">
+                <span class="bag-circle">🛍️</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="food-card" data-id="3">
+          <div class="card-media">
+            <img src="food3.png" alt="Chile Bell Pepper">
+            <div style="display:none" class="badge"></div>
+            <div class="fav" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.1-7.2C.9 10.9 3 7 6.4 7c1.8 0 3.2.9 4 2 .8-1.1 2.2-2 4-2 3.4 0 5.5 3.9 3.5 6.8C19.5 16.1 12 21 12 21z"/></svg></div>
+          </div>
+          <div class="food-body">
+            <div class="stars">★★★★★</div>
+            <div class="food-title">Chile Bell Pepper</div>
+            <div class="food-meta">Smoky & spicy</div>
+            <div class="card-footer">
+              <div>
+                <span class="price">$18.00</span>
+              </div>
+              <button class="add-to-bag" data-id="3" title="Add to bag">
+                <span class="bag-circle">🛍️</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="food-card" data-id="4">
+          <div class="card-media">
+            <img src="food4.png" alt="Green Cabbage">
+            <div style="display:none" class="badge"></div>
+            <div class="fav" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.1-7.2C.9 10.9 3 7 6.4 7c1.8 0 3.2.9 4 2 .8-1.1 2.2-2 4-2 3.4 0 5.5 3.9 3.5 6.8C19.5 16.1 12 21 12 21z"/></svg></div>
+          </div>
+          <div class="food-body">
+            <div class="stars">★★★★★</div>
+            <div class="food-title">Green Cabbage</div>
+            <div class="food-meta">Crispy & fresh</div>
+            <div class="card-footer">
+              <div>
+                <span class="price">$15.00</span>
+              </div>
+              <button class="add-to-bag" data-id="4" title="Add to bag">
+                <span class="bag-circle">🛍️</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="food-card" data-id="5">
+          <div class="card-media">
+            <img src="food5.png" alt="Roasted Corn">
+            <div style="display:none" class="badge"></div>
+            <div class="fav" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.1-7.2C.9 10.9 3 7 6.4 7c1.8 0 3.2.9 4 2 .8-1.1 2.2-2 4-2 3.4 0 5.5 3.9 3.5 6.8C19.5 16.1 12 21 12 21z"/></svg></div>
+          </div>
+          <div class="food-body">
+            <div class="stars">★★★★★</div>
+            <div class="food-title">Roasted Corn</div>
+            <div class="food-meta">Smoky & buttery</div>
+            <div class="card-footer">
+              <div>
+                <span class="price">$15.00</span>
+              </div>
+              <button class="add-to-bag" data-id="5" title="Add to bag">
+                <span class="bag-circle">🛍️</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="food-card" data-id="6">
+          <div class="card-media">
+            <img src="food6.png" alt="Organic Asparagus">
+            <div class="badge">-10%</div>
+            <div class="fav" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.1-7.2C.9 10.9 3 7 6.4 7c1.8 0 3.2.9 4 2 .8-1.1 2.2-2 4-2 3.4 0 5.5 3.9 3.5 6.8C19.5 16.1 12 21 12 21z"/></svg></div>
+          </div>
+          <div class="food-body">
+            <div class="stars">★★★★★</div>
+            <div class="food-title">Organic Asparagus</div>
+            <div class="food-meta">Seasonal</div>
+            <div class="card-footer">
+              <div>
+                <span class="price">$16.00</span>
+                <span class="old-price">$19.00</span>
+              </div>
+              <button class="add-to-bag" data-id="6" title="Add to bag">
+                <span class="bag-circle">🛍️</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 7 (Sold Out) -->
+        <article class="food-card" data-id="7">
+          <div class="card-media">
+            <img src="food7.png" alt="Skewers">
+            <div class="badge sold">SOLD OUT</div>
+            <div class="fav" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.1-7.2C.9 10.9 3 7 6.4 7c1.8 0 3.2.9 4 2 .8-1.1 2.2-2 4-2 3.4 0 5.5 3.9 3.5 6.8C19.5 16.1 12 21 12 21z"/></svg></div>
+          </div>
+          <div class="food-body">
+            <div class="stars">★★★★★</div>
+            <div class="food-title">Purple Onion Skewers</div>
+            <div class="food-meta">Popular choice</div>
+            <div class="card-footer">
+              <div>
+                <span class="price">$18.00</span>
+              </div>
+              <button class="add-to-bag" data-id="7" disabled title="Sold out">
+                <span class="bag-circle">⛔</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 8 -->
+        <article class="food-card" data-id="8">
+          <div class="card-media">
+            <img src="food8.png" alt="Cherry Tomato Wrap">
+            <div style="display:none" class="badge"></div>
+            <div class="fav" title="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-9.1-7.2C.9 10.9 3 7 6.4 7c1.8 0 3.2.9 4 2 .8-1.1 2.2-2 4-2 3.4 0 5.5 3.9 3.5 6.8C19.5 16.1 12 21 12 21z"/></svg></div>
+          </div>
+          <div class="food-body">
+            <div class="stars">★★★★★</div>
+            <div class="food-title">Cherry Tomato Wrap</div>
+            <div class="food-meta">Light & tasty</div>
+            <div class="card-footer">
+              <div>
+                <span class="price">$14.00</span>
+              </div>
+              <button class="add-to-bag" data-id="8" title="Add to bag">
+                <span class="bag-circle">🛍️</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div> <!-- /food-grid -->
+    </div> <!-- /cards-wrapper -->
+
+    <!-- Place order (outside the grid container) -->
+    <div class="place-order-wrap">
+      <button id="placeOrderBtn" class="place-order" disabled>PLACE ORDER</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-nav">
+      <a href="overview.html" class="footer-link">Overview</a>
+      <a href="menu.html" class="footer-link">Menu</a>
+      <a href="#" class="footer-link">Review</a>
+      <a href="#" class="footer-link">Event</a>
+      <a href="#" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-brand-social">
+      <div class="footer-brand">AUDIOBYTES</div>
+      <div class="footer-social">
+        <a href="www.instagram.com" class="footer-icon"><img src="instagram-svgrepo-com.svg" alt="Instagram" /></a>
+        <a href="www.facebook.com" class="footer-icon"><img src="facebook-svgrepo-com (1).svg" alt="Facebook" /></a>
+        <a href="www.twitter.com" class="footer-icon"><img src="twitter-svgrepo-com.svg" alt="Twitter" /></a>
+        <a href="www.youtube.com" class="footer-icon"><img src="youtube-svgrepo-com.svg" alt="YouTube" /></a>
+      </div>
+    </div>
+    <form class="footer-newsletter">
+      <label for="newsletter-email">Sign up to our newsletter</label>
+      <input type="text" id="newsletter-email" placeholder="Enter Email" style="background-color: transparent;border-width: 0px;" />
+    </form>
+  </footer>
+  <!-- ---------- JavaScript for interactions ---------- -->
+  <script>
+    // Menu scroll up / down controls
+    const menuList = document.getElementById('menuList');
+    const upBtn = document.getElementById('menu-up');
+    const downBtn = document.getElementById('menu-down');
+
+    function scrollMenu(amount){
+      // support horizontal layouts on smaller screens
+      if(getComputedStyle(menuList).overflowX !== 'hidden' && menuList.scrollWidth > menuList.clientWidth && window.innerWidth < 900){
+        menuList.scrollBy({left: amount, behavior:'smooth'});
+      } else {
+        menuList.scrollBy({top: amount, behavior:'smooth'});
+      }
+    }
+    upBtn.addEventListener('click', ()=> scrollMenu(-120));
+    downBtn.addEventListener('click', ()=> scrollMenu(120));
+
+    // Add to bag / cart logic
+    const addBtns = document.querySelectorAll('.add-to-bag');
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
+    let cart = new Set();
+
+    function updatePlaceButton(){
+      if(cart.size > 0){
+        placeOrderBtn.disabled = false;
+        placeOrderBtn.textContent = `PLACE ORDER (${cart.size})`;
+      } else {
+        placeOrderBtn.disabled = true;
+        placeOrderBtn.textContent = 'PLACE ORDER';
+      }
+    }
+
+    addBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = btn.dataset.id;
+        // if disabled (sold out) ignore
+        if(btn.disabled) return;
+
+        if(cart.has(id)){
+          cart.delete(id);
+          btn.classList.remove('added');
+        } else {
+          cart.add(id);
+          btn.classList.add('added');
+        }
+        updatePlaceButton();
+      });
+    });
+
+    // Place order action (simple demo behavior)
+    placeOrderBtn.addEventListener('click', () => {
+      if(cart.size === 0) return;
+      const orderIds = Array.from(cart);
+      alert('Order placed for items: ' + orderIds.join(', ') + '\nClick OK for Payment gateway simulation');
+      // clear cart for demo
+      cart.clear();
+      document.querySelectorAll('.add-to-bag.added').forEach(x => x.classList.remove('added'));
+      updatePlaceButton();
+      window.location.href = "payment.html";
+    });
+
+    // Optional: make menu-list show subtle shadow when scrollable
+    function updateMenuShadows(){
+      if(!menuList) return;
+      if(menuList.scrollHeight > menuList.clientHeight) {
+        // vertical scroll available
+        menuList.style.boxShadow = 'inset 0 12px 30px rgba(0,0,0,0.04)';
+      } else if (menuList.scrollWidth > menuList.clientWidth) {
+        menuList.style.boxShadow = 'inset 12px 0 30px rgba(0,0,0,0.04)';
+      } else {
+        menuList.style.boxShadow = 'none';
+      }
+    }
+    updateMenuShadows();
+    window.addEventListener('resize', updateMenuShadows);
+
+    // ensure page starts at top on reload (like reference)
+    window.onbeforeunload = () => window.scrollTo(0,0);
+  </script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Overview - AudioBites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=David+Libre&family=Gloock&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Elsie&family=Abril+Fatface&family=Almendra+Display&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --page-bg:#10181B;
+      --text-muted:#797B78;
+      --brand:#D68240;
+      --accent:#C4AE45;     /* working hours tile + labels */
+      --quote1:#F855CA;
+      --quote2:#EF7C6A;
+      --quote3:#FFB632;
+      --footer-top:#FCE9AA;
+      --footer-bottom:#968B65;
+      --footer-text:#0F0C27;
+      --card:#0E1216;
+      --ink:#ffffff;
+    }
+
+    /* base */
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; padding:0; overflow-x:hidden;
+      background:var(--page-bg);
+      font-family:'Roboto',sans-serif; color:var(--ink);
+    }
+    .container{ max-width:1200px; margin:0 auto; padding:0 24px; }
+
+    /* navbar (reused) */
+    .font-size{ width:100px; }
+    .custom-navbar{
+      padding:10px 10px; display:flex; justify-content:space-between; align-items:center;
+      background:transparent !important; /* fully transparent */
+    }
+    .custom-navbar .nav-link{
+      text-decoration:none; color:#fdfdfd !important; font-family:'Elsie', serif;
+      font-size:18px; transition:color .3s ease; padding:0 15px;
+    }
+    .custom-navbar .nav-link:hover{ color:var(--accent) !important; }
+
+    /* typographic helpers (reused naming) */
+    .team-label{
+      font-size:14px; letter-spacing:.08em; text-transform:uppercase;
+      color:var(--accent); font-weight:700; margin:0 0 8px 0;
+    }
+    .team-heading{
+      font-family:'Gloock',serif; font-size:38px; font-weight:700; margin:6px 0 14px 0;
+      color:#fff;
+    }
+    .team-paragraph{
+      font-family:'David Libre',serif; font-size:18px; line-height:1.65;
+      color:var(--text-muted); margin:0 0 18px 0;
+    }
+    .team-btn{
+      display:inline-block; background:var(--brand); color:#fff; border:none;
+      font-weight:700; font-size:15px; padding:10px 22px; border-radius:6px;
+      text-decoration:none; cursor:pointer; transition:.25s;
+    }
+    .team-btn:hover{ background:#fff; color:var(--brand); }
+
+    /* section spacing */
+    section{ padding:72px 0; }
+    .section-dark{ background:var(--page-bg); }
+    .section-card{ background:transparent; }
+
+    /* 2) WHY CHOOSE US (features) */
+    .features-wrap{ text-align:center; }
+    .features-top{ max-width:760px; margin:0 auto 36px; }
+    .feature-grid{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+    }
+    .feature-card{
+      background:var(--card); border-radius:12px; padding:28px 22px;
+      display:flex; flex-direction:column; align-items:center; gap:12px;
+      box-shadow:0 8px 24px rgba(0,0,0,.22);
+    }
+    .feature-card img{ width:52px; height:52px; object-fit:contain; }
+    .feature-title{ font-family:'Gloock',serif; font-size:18px; }
+    .feature-text{ color:var(--text-muted); font-size:15px; line-height:1.6; }
+
+    /* 3) WORKING HOURS (yellow band) */
+    .hours-band{
+      background:var(--accent);
+      position:relative;
+      overflow:hidden;
+      padding:0;
+    }
+    .hours-inner{
+      display:grid; grid-template-columns:1.2fr 1.2fr .8fr; gap:24px;
+      align-items:center;
+      min-height:360px;
+    }
+    .hours-copy{ padding:40px 0 40px;width:220px;height:300px; }
+    .hours-heading{
+      font-family:'Abril Fatface',cursive; font-size:36px; color:#ffffff; margin:8px 0 14px;
+    }
+    .hours-actions{ display:flex; gap:12px; margin-top:16px; }
+    .btn-outline{
+      background:transparent; color:#0F0C27; border:1px solid #0F0C27; border-radius:10px;
+      padding:10px 18px; font-weight:700; cursor:pointer;
+    }
+    .btn-outline:hover{ background:#0F0C27; color:#fff; }
+
+    .hours-art{
+      display:flex; justify-content:center; align-items:center;
+      height:100%;
+    }
+    .hours-tile{
+      background:var(--page-bg); color:#fff; border-radius:10px; padding:50px;
+      width:300px; height:300px; justify-self:center;
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
+    }
+    .hours-col{ margin-bottom:18px; }
+    .hours-col h4{ margin:0 0 6px 0; font-family:'Gloock',serif; font-size:18px; }
+    .sub{ font-size:13px; color:#C9D0D6; }
+
+    /* 4) WHY PEOPLE CHOOSE US (testimonials) */
+    .testi-wrap{ text-align:center; }
+    .testi-grid{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:22px;
+    }
+    .testi-card{
+      background:rgba(255,255,255,.04); border-radius:12px; padding:26px 18px;
+      text-align:center; position:relative;
+    }
+    .quote-badge{
+      width:40px; height:40px; border-radius:50%;
+      position:absolute; top:-20px; left:calc(50% - 20px);
+      display:grid; place-items:center; color:#0F0C27; font-weight:900;
+    }
+    .badge-1{ background:var(--quote1); }
+    .badge-2{ background:var(--quote2); }
+    .badge-3{ background:var(--quote3); }
+    .testi-text{ color:var(--text-muted); font-size:15px; line-height:1.6; margin-top:12px; }
+    .stars{ margin:10px 0; letter-spacing:2px; color:#FFB632; }
+    .testi-name{ font-family:'Gloock',serif; }
+    .testi-role{ font-size:12px; color:#b8bfc6; }
+
+    /* 5) COUNTS */
+    .counts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+  padding: 36px 0 6px;
+}
+
+.count-num {
+  font-size: 28px;
+  font-weight: 800;
+  display: inline-block;
+  transform: translateY(-15px);
+  opacity: 0;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.count-num.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.count-label {
+  font-size: 12px;
+  color: #b4bbc2;
+  letter-spacing: 0.08em;
+}
+
+    /* 6) Promo banner image with overlay text + 2 buttons */
+    .promo{
+      position:relative; min-height:420px; overflow:hidden; border-radius:0;
+      background:#0A0F13;
+    }
+    .promo::before{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(90deg, rgba(0,0,0,.55), rgba(0,0,0,.25) 40%, rgba(0,0,0,0) 65%),
+         url('overview_img_2.jpg') center/cover no-repeat;
+      filter:saturate(1.05);
+    }
+    .promo-content{
+      position:relative; z-index:1; padding:60px 0;
+    }
+    .promo h2{
+      font-family:'Abril Fatface',cursive; font-size:36px; margin:0 0 14px;
+    }
+    .store-buttons{ display:flex; gap:14px; margin-top:12px; }
+    .store-btn{
+      background:#D68240; color:#000000; border-radius:10px; padding:10px 16px; font-weight:800;
+      border:none; cursor:pointer;
+    }
+
+    /* 7) Explore Our Foods */
+    .cards3{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:22px;
+    }
+    .food-card{
+      background:#0E1216; border-radius:14px; overflow:hidden;
+      box-shadow:0 8px 24px rgba(0,0,0,.22);
+    }
+    .food-card img{ width:100%; height:220px; object-fit:cover; display:block; }
+    .food-body{ padding:16px; }
+    .food-title{ font-family:'Gloock',serif; font-size:18px; margin:0 0 4px; }
+    .food-meta{ font-size:12px; color:#9aa3aa; }
+
+    /* 8) Newsletter over image */
+    .newsletter{
+      position:relative; min-height:320px; overflow:hidden;
+    }
+    .newsletter::before{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(16,24,27,.2), rgba(16,24,27,.75)),
+         url('overview_newspaper.jpg') center/cover no-repeat;
+    }
+    .newsletter .container{ position:relative; z-index:1; }
+    .nl-wrap{ max-width:700px; padding:28px 0; }
+    .nl-row{ display:flex; gap:10px; margin-top:12px; }
+    .nl-input{
+      flex:1; padding:12px 16px; border-radius:8px; border:1px solid var(--brand);
+      background:rgba(255,255,255,.85);
+    }
+
+    /* footer (reused) */
+    .footer{
+      background:linear-gradient(to top, var(--footer-top), var(--footer-bottom));
+      color:var(--footer-text); padding:40px 30px; display:flex; flex-wrap:wrap;
+      justify-content:space-between; align-items:flex-start;
+    }
+    .footer-nav{ display:flex; gap:10px; }
+    .footer-link{
+      text-decoration:none; color:#fdfdfd !important; font-family:'Elsie',serif; font-size:18px; transition:.3s;
+    }
+    .footer-link:hover{ color:var(--accent) !important; }
+    .footer-brand{ font-family:'Gloock',serif; font-size:32px; font-weight:700; text-align:center; flex:1; }
+    .footer-brand-social{ display:flex; flex-direction:column; align-items:center; }
+    .footer-social{ display:flex; gap:18px; }
+    .footer-social a{ padding:10px; margin-top:20px; }
+    .footer-icon img{ width:28px; height:28px; filter:grayscale(.3); transition:.2s; }
+    .footer-icon:hover img{ filter:grayscale(0) brightness(1.2); }
+    .footer-newsletter{ display:flex; flex-direction:column; gap:8px; }
+    .footer-newsletter input[type="text"],
+    .footer-newsletter input[type="email"]{
+      padding:8px 16px; border-radius:20px; border:1px solid var(--brand); background:#fffbe6; font-family:'Roboto',sans-serif;
+    }
+
+    /* responsive */
+    @media (max-width: 980px){
+      .feature-grid, .testi-grid, .cards3, .counts{ grid-template-columns:1fr 1fr; }
+      .hours-inner{ grid-template-columns:1fr; padding:32px 0; min-height:auto; gap:10px; }
+      .hours-art{ order:3; opacity:.3; }
+      .hours-tile{ order:2; }
+    }
+    @media (max-width: 640px){
+      .feature-grid, .testi-grid, .cards3, .counts{ grid-template-columns:1fr; }
+      .promo{ min-height:360px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1) Navbar -->
+  <nav class="custom-navbar" style="position:fixed; top:0; left:0; width:100%; z-index:1000;">
+    <a class="navbar-brand" href="#"><img src="font-01.svg" class="font-size" /></a>
+    <div class="navbar-links">
+      <a class="nav-link" href="figmapg.html#page-general">General</a>
+      <a class="nav-link" href="experiments.html">Team</a>
+      <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="menu.html">Menu</a>
+      <a class="nav-link" href="menu.html" onclick="checkOutNotFound()">Checkout</a>
+      <a class="nav-link" href="payment.html#events">Event</a>
+      <a class="nav-link" href="review.html">Review</a>
+      <a class="nav-link" href="review.html#questionaire">Contact</a>
+    </div>
+  </nav>
+
+  <!-- 2) Why choose us (features) -->
+  <section class="section-dark">
+    <div class="container features-wrap">
+      <div class="features-top">
+        <div class="team-label">Features</div>
+        <h2 class="team-heading">Why people choose us?</h2>
+        <p class="team-paragraph">Lorem ipsum dolor sit amet consectetur. Dolor elit vitae nunc varius. Facilisis eget ac sit semper ac enim. Turpis aliquet ac ut ac donec ut. Sagittis vestibulum ut quis non massa netus.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <img src="overview_fork.svg" alt="Menu for every taste"/>
+          <div class="feature-title">Menu for Every Taste</div>
+          <div class="feature-text">Lorem ipsum dolor sit amet consectetur. Felis eget sit scelerisque vestibulum.</div>
+        </div>
+        <div class="feature-card">
+          <img src="overview_beans.svg" alt="Always quality food"/>
+          <div class="feature-title">Always Quality Food</div>
+          <div class="feature-text">Lorem ipsum dolor sit amet consectetur. Felis eget sit scelerisque vestibulum.</div>
+        </div>
+        <div class="feature-card">
+          <img src="overview_cook.svg" alt="Experienced barista"/>
+          <div class="feature-title">Experienced Barista</div>
+          <div class="feature-text">Lorem ipsum dolor sit amet consectetur. Felis eget sit scelerisque vestibulum.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) Working hours (yellow) -->
+  <section class="hours-band">
+    <div class="container hours-inner">
+      <div class="hours-copy">
+        <div class="team-label" style="color:#fff;">Reservation</div>
+        <div class="hours-heading">Working Hours</div>
+        <div class="hours-actions">
+          <button class="btn-outline">Book a Table</button>
+          <button class="btn-outline">Contact Us</button>
+        </div>
+      </div>
+
+      <div class="hours-art">
+        <!-- simple inline svg placeholder for the chef line-art -->
+        <img src="team-01.svg" style="width: 750px; height: 380px;" alt="Always quality food"/>
+      </div>
+
+      <div class="hours-tile">
+        <div class="hours-col">
+            <br>
+          <h4>Sunday to Tuesday</h4>
+          <div class="sub">09:00 AM - 10:00 PM</div>
+        </div>
+        <div class="hours-col">
+            <br>
+            <br>
+          <h4>Friday to Saturday</h4>
+          <div class="sub">09:00 AM - 10:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4) Why people choose us (testimonials) -->
+  <section class="section-dark">
+    <div class="container testi-wrap">
+      <div class="features-top">
+        <div class="team-label">Features</div>
+        <h2 class="team-heading">Why people choose us?</h2>
+        <p class="team-paragraph">Lorem ipsum dolor sit amet consectetur. Dolor elit vitae nunc varius. Facilisis eget ac sit semper ac enim.</p>
+      </div>
+
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="quote-badge badge-1"><img src="overview_quote.svg" style="width: 20x; height: 20px;" alt="quote"/></div>
+          <p class="testi-text">Lorem ipsum dolor sit amet consectetur. Suspendisse lobortis quam arcu dignissim condimentum.</p>
+          <div class="stars">★★★★★</div>
+          <div class="testi-name">Julia Mae</div>
+          <div class="testi-role">Business Woman</div>
+        </div>
+        <div class="testi-card">
+          <div class="quote-badge badge-2"><img src="overview_quote.svg" style="width: 20x; height: 20px;" alt="quote"/></div>
+          <p class="testi-text">Lorem ipsum dolor sit amet consectetur. Suspendisse lobortis quam arcu dignissim condimentum.</p>
+          <div class="stars">★★★★★</div>
+          <div class="testi-name">John Max</div>
+          <div class="testi-role">Business Man</div>
+        </div>
+        <div class="testi-card">
+          <div class="quote-badge badge-3"><img src="overview_quote.svg" style="width: 20x; height: 20px;" alt="quote"/></div>
+          <p class="testi-text">Lorem ipsum dolor sit amet consectetur. Suspendisse lobortis quam arcu dignissim condimentum.</p>
+          <div class="stars">★★★★★</div>
+          <div class="testi-name">Bella Kim</div>
+          <div class="testi-role">Business Woman</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5) Counts -->
+  <section class="section-card">
+  <div class="container counts">
+    <div>
+      <div class="count-num" data-target="1287">0</div>
+      <div class="count-label">VISITORS DAILY</div>
+    </div>
+    <div>
+      <div class="count-num" data-target="578">0</div>
+      <div class="count-label">DELIVERIES MONTHLY</div>
+    </div>
+    <div>
+      <div class="count-num" data-target="1440">0</div>
+      <div class="count-label">POSITIVE FEEDBACK</div>
+    </div>
+    <div>
+      <div class="count-num" data-target="40">0</div>
+      <div class="count-label">AWARDS AND HONORS</div>
+    </div>
+  </div>
+</section>
+  <!-- 6) Promo image with heading + 2 buttons -->
+  <section class="promo">
+    <div class="container promo-content">
+      <h2>Simple Way To<br/>Order Your Foods</h2>
+      <div class="store-buttons">
+        <button class="store-btn">Get it on Google Play</button>
+        <button class="store-btn">Get it on Apple Store</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7) Explore Our Foods -->
+  <section class="section-dark">
+    <div class="container" style="padding:80px 0 100px 0;">
+      <div class="team-label" style="text-align:center;">Menu</div>
+      <h2 class="team-heading" style="text-align:center;">Explore Our Foods</h2>
+      <p class="team-paragraph" style="text-align:center; max-width:760px; margin:0 auto 16px;">
+        Lorem ipsum dolor sit amet consectetur. Dolor elit vitae nunc varius. Facilisis eget ac sit semper ac enim.
+      </p>
+
+      <div class="cards3">
+        <div class="food-card">
+          <img src="overview_food_1.jpg" alt="Food 1">
+          <div class="food-body">
+            <div class="food-title">Raspberry French Toast</div>
+            <div class="food-meta">Time: 10–15 Minutes | Serves: 1</div>
+          </div>
+        </div>
+        <div class="food-card">
+          <img src="overview_food_2.jpg" alt="Food 2">
+          <div class="food-body">
+            <div class="food-title">Burger Duo Platter</div>
+            <div class="food-meta">Time: 15–20 Minutes | Serves: 1</div>
+          </div>
+        </div>
+        <div class="food-card">
+          <img src="overview_food_3.jpg" alt="Food 3">
+          <div class="food-body">
+            <div class="food-title">Veggie Feast Bowl</div>
+            <div class="food-meta">Time: 10–15 Minutes | Serves: 1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8) Newsletter over image -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="nl-wrap">
+        <div class="team-label">News Letter</div>
+        <h2 class="team-heading">Subscribe Our Newsletter</h2>
+        <p class="team-paragraph">Lorem ipsum dolor sit amet consectetur. Dolor elit vitae nunc varius. Facilisis eget ac sit semper ac enim.</p>
+        <div class="nl-row">
+          <input class="nl-input" type="email" placeholder="Type here" />
+          <button class="team-btn">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9) Footer (reused) -->
+  <footer class="footer">
+    <div class="footer-nav">
+      <a href="overview.html" class="footer-link">Overview</a>
+      <a href="menu.html" class="footer-link">Menu</a>
+      <a href="#" class="footer-link">Review</a>
+      <a href="#" class="footer-link">Event</a>
+      <a href="#" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-brand-social">
+      <div class="footer-brand">AUDIOBYTES</div>
+      <div class="footer-social">
+        <a href="www.instagram.com" class="footer-icon"><img src="instagram-svgrepo-com.svg" alt="Instagram" /></a>
+        <a href="www.facebook.com" class="footer-icon"><img src="facebook-svgrepo-com (1).svg" alt="Facebook" /></a>
+        <a href="www.twitter.com" class="footer-icon"><img src="twitter-svgrepo-com.svg" alt="Twitter" /></a>
+        <a href="www.youtube.com" class="footer-icon"><img src="youtube-svgrepo-com.svg" alt="YouTube" /></a>
+      </div>
+    </div>
+    <form class="footer-newsletter">
+      <label for="newsletter-email">Sign up to our newsletter</label>
+      <input type="text" id="newsletter-email" placeholder="Enter Email" style="background-color: transparent;border-width: 0px;" />
+    </form>
+  </footer>
+  <script>
+    function animateCounts() {
+  const counters = document.querySelectorAll(".count-num");
+
+  counters.forEach(counter => {
+    counter.innerText = "0";
+    const target = +counter.getAttribute("data-target");
+
+    const updateCount = () => {
+      const current = +counter.innerText;
+      const increment = Math.ceil(target / 100); // speed
+
+      if (current < target) {
+        counter.innerText = current + increment;
+        requestAnimationFrame(updateCount);
+      } else {
+        counter.innerText = target; // stop at target
+      }
+    };
+
+    // trigger drop + count
+    setTimeout(() => {
+      counter.classList.add("active");
+      updateCount();
+    }, 200);
+  });
+}
+
+//  Add this part to trigger only when scrolled to section
+window.addEventListener("scroll", () => {
+  const section = document.querySelector(".section-card");
+  const rect = section.getBoundingClientRect();
+
+  if (rect.top < window.innerHeight && rect.bottom > 0) {
+    animateCounts();
+    // run only once
+    window.removeEventListener("scroll", this);
+  }
+});
+
+// check out not found
+function checkOutNotFound(){
+  alert("Please place an order first");
+}
+    //refresh to top
+    window.onbeforeunload = () => {
+  window.scrollTo(0, 0);
+  };
+  </script>
+</body>
+</html>
