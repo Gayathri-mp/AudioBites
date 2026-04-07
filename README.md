@@ -1,74 +1,36 @@
-# [Your Project Name]
-
-## Overview
-[Brief description of your project]
-
-## Project Structure
-
-\`\`\`
-├── index.html          # Main landing page
-├── menu.html           # Navigation/Menu page
-├── overview.html       # Project overview page
-├── payment.html        # Payment processing page
-├── review.html         # Reviews/feedback page
-├── experiments.html    # Experimental features
-└── README.md
-\`\`\`
-
-## Architecture Diagram
-
-\`\`\`mermaid
-graph TD
-    A[index.html] --> B[menu.html]
-    A --> C[overview.html]
-    A --> D[payment.html]
-    A --> E[review.html]
-    A --> F[experiments.html]
-    D --> G[Payment Gateway]
-    E --> H[Database/API]
-\`\`\`
-
-## File Relationships
-
-\`\`\`mermaid
-graph LR
-    idx["index.html<br/>(Landing Page)"]
-    menu["menu.html<br/>(Navigation)"]
-    overview["overview.html<br/>(Info)"]
-    payment["payment.html<br/>(Checkout)"]
-    review["review.html<br/>(Feedback)"]
-    exp["experiments.html<br/>(Testing)"]
-    
-    idx -->|links to| menu
-    idx -->|links to| overview
-    idx -->|links to| payment
-    idx -->|links to| review
-    idx -->|links to| exp
-\`\`\`
-
-## Tech Stack
-- HTML5
-- [CSS Framework - if any]
-- [JavaScript Library - if any]
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
-[Instructions here]
 
-## Installation
-[Installation steps]
+First, run the development server:
 
-## Features
-- [Feature 1]
-- [Feature 2]
-- [Feature 3]
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## File Descriptions
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-| File | Purpose |
-|------|---------|
-| index.html | Main entry point |
-| menu.html | Navigation menu |
-| overview.html | Project information |
-| payment.html | Payment processing |
-| review.html | User reviews |
-| experiments.html | Experimental features |
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

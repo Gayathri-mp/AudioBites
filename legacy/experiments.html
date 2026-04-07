@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Team Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=David+Libre&family=Gloock&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Elsie&family=Abril+Fatface&family=Almendra+Display&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      min-height:100vh;
+    } 
+    /* Team Section */
+    .body-team {
+      margin: 0px;
+      padding: 70px 0 50px 0;
+      background: linear-gradient(to bottom, #fce9aa, #441414);
+      font-family: 'Roboto', sans-serif;
+    }
+    .body-team {
+      background: linear-gradient(to bottom, #fce9aa, #441414); /* gold to brown */
+      font-family: 'Roboto', sans-serif;
+      padding-bottom: 50px;
+    }
+
+    /* Flex row for heading and description */
+    .team-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 50px;
+      margin-bottom: 50px;
+    }
+    .team-heading-first {
+      text-align: left;
+      margin: 0px;
+      padding-left: 60px;
+      font-family: 'Abril Fatface', cursive;
+      font-size: 64px;
+      color: #0F0C27;
+    }
+    .description-right {
+      text-align: right;
+      padding-right: 60px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+      max-width: 600px;
+      color: #0F0C27;
+      margin: 0;
+    }
+    .team-button-container{
+      padding:0px 100px;
+    }
+    .team-button{
+      background: transparent;
+      border: 2px solid #714037;
+      color: #714037;
+      padding: 20px 20px;
+      margin:4px;
+      font-size: 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    /* Carousel container */
+    .custom-carousel {
+      display: flex;
+      gap: 30px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 20px;
+      margin-bottom:60px;
+    }
+
+    .custom-carousel::-webkit-scrollbar {
+      display: none; /* hide scrollbar for clean look */
+    }
+
+    /* Carousel items */
+    .carousel-item {
+      flex: 0 0 auto;
+      width: 250px;
+      text-align: center;
+      scroll-snap-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .carousel-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .carousel-item-name {
+      font-family: 'Gloock', serif;
+      font-size: 22px;
+      margin-top: 10px;
+      color: #fff;
+    }
+
+    .carousel-item-position {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      padding:10px;
+      color: #f2cfcf;
+    }
+
+    .carousel-item-description {
+      font-family: 'David Libre', serif;
+      font-size: 16px;
+      margin-top: 5px;
+      color: #f2cfcf;
+      padding:8px;
+      /*line spacing for better readability*/
+      line-height: 1.4;
+    }
+    /* Team Main Content Layout */
+      .team-main-content {
+        background: #10151a;
+        padding: 50px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .team-section {
+        display: flex;
+        flex-direction: row;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 0 40px 200px;
+        gap: 40px;
+        padding: 40px;
+        box-sizing: border-box;
+        opacity: 0; /*hides until animation*/
+      }
+      .team-section.animate {
+  animation: team-slide-in 1s ease forwards;
+}
+      .team-section-content {
+        min-width: 0;
+      }
+      .team-label {
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        color: #C4AE45;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin:0px;
+        padding:5px;
+      }
+      .team-heading {
+        font-family: 'Gloock', serif;
+        font-size: 36px;
+        color: #fff;
+        font-weight: 700;
+        margin:0px;
+        padding:5px;
+        margin: 10px 0 30px 0;
+      }
+      .team-paragraph {
+        font-family: 'David Libre', serif;
+        font-size: 18px;
+        color: #e0e0e0;
+        line-height: 1.6;
+        margin: 0px;
+        padding:5px;
+      }
+      .team-btn {
+        display: inline-block;
+        background: #fce9aa;
+        color: #10151a;
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        padding: 10px 24px;
+        margin:20px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background 0.2s;
+        border: none;
+      }
+      .team-btn:hover {
+        background: #fff;
+        color: #C4AE45;
+      }
+      .team-author {
+        font-family: 'Gloock', serif;
+        color: #FCE9AA;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      .team-author span {
+        font-size: 14px;
+      }
+      .team-section-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width:430px;
+        height:330px;
+        object-fit: cover;
+        border-radius:10px;
+        box-shadow:0 4px 24px rgba(0,0,0,0.18);
+      }
+      .team-section-image-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin:0 80px 0 80px;
+      }
+      /* Slide-in animation */
+  @keyframes team-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* navbar*/
+  .font-size {
+  width: 100px;}
+
+  .custom-navbar .nav-link {
+  text-decoration: none;
+  color: rgb(253, 253, 253) !important;
+  font-family: 'Elsie', serif;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+.custom-navbar .nav-link:hover {
+  color: #C4AE45 !important; /* gold on hover */
+}
+/*footer*/
+.footer {
+      background: linear-gradient(to top, #FCE9AA, #968B65);
+      color: #0F0C27;
+      padding: 40px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .footer-nav {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+    .footer-nav a {
+      padding:5px;
+    }
+    .footer-link {
+      text-decoration: none;
+      color: rgb(253, 253, 253) !important;
+      font-family: 'Elsie', serif;
+      font-size: 18px;
+      transition: color 0.3s ease;
+      text-decoration: none;
+    }
+    .footer-link:hover { color: #C4AE45 !important; }
+    .footer-brand {
+      font-family: 'Gloock', serif;
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      flex: 1;
+    }
+    .footer-brand-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+    .footer-social {
+      display: flex;
+      gap: 18px;
+    }
+    .footer-social a {
+      padding:10px;
+      margin-top:20px;
+    }
+    .footer-icon img {
+      width: 28px;
+      height: 28px;
+      filter: grayscale(0.3);
+      transition: filter 0.2s;
+    }
+    .footer-icon:hover img {
+      filter: grayscale(0) brightness(1.2);
+    }
+    .footer-newsletter {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-newsletter input[type="email"] {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid #D68240;
+      font-family: 'Roboto', sans-serif;
+      background: #fffbe6;
+    }
+  </style>
+</head>
+<body>
+<!--navbar-->
+<nav class="custom-navbar" style="padding:10px 10px; display: flex; justify-content: space-between; align-items: center;background-color:transparent;
+position:fixed; top:0; left:0; width:100%; z-index:1000;">
+  <a class="navbar-brand" href="#"><img src="font-01.svg" class="font-size"/></a>
+  <div class="navbar-links">
+    <a class="nav-link" href="index.html#page-general" style="padding: 0 15px;">General</a>
+    <a class="nav-link" href="experiments.html" style="padding: 0 15px;">Team</a>
+    <a class="nav-link" href="overview.html" style="padding: 0 15px;">Overview</a>
+    <a class="nav-link" href="menu.html" style="padding: 0 15px;">Menu</a>
+    <a class="nav-link" href="menu.html" onclick="checkOutNotFound()"style="padding: 0 15px;">Checkout</a>
+    <a class="nav-link" href="payment.html#events" style="padding: 0 15px;">Event</a>
+    <a class="nav-link" href="review.html">Review</a>
+    <a class="nav-link" href="review.html#questionaire" style="padding: 0 15px;">Contact</a>
+  </div>
+</nav>
+  <!--TEAM CAROUSEL-->
+<div id="page-team">
+  <div class="body-team">
+<div class="team-header-row">
+  <h1 class="team-heading-first">OUR TEAM</h1>
+  <i><p class="description-right">"Our kitchen team crafts every dish with passion, precision, and a love for fresh, wholesome ingredients."</p></i>
+</div>
+<div class="team-button-container">
+  <button class="team-button">←</button>
+  <button class="team-button">→</button>
+</div>
+  <div class="custom-carousel">
+    <div class="carousel-item">
+      <img src="team1.jpg" alt="Sophia Miller">
+      <div class="carousel-item-name">Sophia Miller</div>
+      <div class="carousel-item-position">Sous Chef</div>
+      <div class="carousel-item-description">Ensures every dish meets the highest standards.</div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="team2.png" alt="Lucas Bennett">
+      <div class="carousel-item-name">Lucas Bennett</div>
+      <div class="carousel-item-position">Chef</div>
+      <div class="carousel-item-description">Leads the kitchen with creativity and precision.</div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="team3.png" alt="Ethan Carter">
+      <div class="carousel-item-name">Ethan Carter</div>
+      <div class="carousel-item-position">Founder & Culinary Director</div>
+      <div class="carousel-item-description">Crafts a menu blending taste with experience.</div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="team4.jpg" alt="Liam Foster">
+      <div class="carousel-item-name">Liam Foster</div>
+      <div class="carousel-item-position">Marketing & Customer Relations</div>
+      <div class="carousel-item-description">Connects with guests, creating memorable experiences.</div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="team5.png" alt="Noah Hughes">
+      <div class="carousel-item-name">Noah Hughes</div>
+      <div class="carousel-item-position">Operations Manager</div>
+      <div class="carousel-item-description">Keeps kitchen and service running seamlessly.</div>
+    </div>
+    <div class="carousel-item">
+      <img src="team6.jpg" alt="Andrea Johnson">
+      <div class="carousel-item-name">Andrea Johnson</div>
+      <div class="carousel-item-position">Senior Chinese Cutlery Specialist</div>
+      <div class="carousel-item-description">Expert in authentic Chinese cutlery selection and presentation.</div>
+    </div>
+    <div class="carousel-item">
+      <img src="team7.jpg" alt="Rachel smith">
+      <div class="carousel-item-name">Rachel smith</div>
+      <div class="carousel-item-position">Reception Manager</div>
+      <div class="carousel-item-description">Ensures smooth guest experiences with professional front-desk service</div>
+    </div>
+    <div class="carousel-item">
+      <img src="team8.jpg" alt="Cristina Lee">
+      <div class="carousel-item-name">Cristina Lee</div>
+      <div class="carousel-item-position">Culinary Experience Curator</div>
+      <div class="carousel-item-description">Specializes in crafting unique dining and music fusion experiences</div>
+    </div>
+  </div>
+  </div>
+  <!--MAIN CONTENT OF TEAM-->
+  <div class="team-main-content" id="team-main-content" onclick="location.href='overview.html'" style="cursor:pointer;">
+  <!-- About Us Section -->
+  <div class="team-section mt-5 pb-4" style="animation-delay: 0s;">
+    <div class="team-section-content">
+      <h6 class="team-label">ABOUT US</h6>
+      <h2 class="team-heading">We Invite You to Visit <br> Our Coffee House</h2>
+      <p class="team-paragraph">Lorem ipsum dolor sit amet consectetur. Dolor elit vitae <br>nunc varius. Facilisis eget ac sit semper ac enim. Turpis <br>aliquet ac ut ac donec ut. Sagittis vestibulum ut quis non<br> massa netus.</p>
+      <div class="team-author">Pier Bowman<br><span>Business CEO & Co Founder</span></div>
+    </div>
+    <div class="team-section-image-wrapper">
+      <img src="ceo-company.jpg" alt="CEO" class="team-section-image"/>
+    </div>
+  </div>
+  <!-- Coffee Menu Section -->
+  <div class="team-section mt-5 pb-4" style="animation-delay: 0.5s;">
+    <div class="team-section-image-wrapper">
+      <img src="kawa_beans_2.jpg" class="team-section-image" alt="Chef Cooking" />
+    </div>
+    <div class="team-section-content">
+      <div class="team-label">COFFEE MENU</div>
+      <h2 class="team-heading">Quality Kava Beans</h2>
+      <p class="team-paragraph">Lorem ipsum dolor sit amet consectetur. Dolor elit vitae<br> nunc varius. Facilisis eget ac sit semper ac enim. Turpis <br>aliquet ac ut ac donec ut. Sagittis vestibulum ut quis non <br>massa netus.</p>
+      <a href="#" class="team-btn" style="max-width:160px;">READ MORE</a>
+    </div>
+    
+  </div>
+  <!-- Tips Section -->
+  <div class="team-section mt-5 pb-4" style="animation-delay: 1s;">
+    <div class="team-section-content">
+      <div class="team-label">OUR TEAM</div>
+      <h2 class="team-heading">Use the Tips & Recipes of <br>Our Barista</h2>
+      <p class="team-paragraph">Lorem ipsum dolor sit amet consectetur. Dolor elit vitae<br> nunc varius. Facilisis eget ac sit semper ac enim. Turpis <br>aliquet ac ut ac donec ut. Sagittis vestibulum ut quis non <br>massa netus.</p>
+      <a href="#" class="team-btn" style="max-width:160px;">READ MORE</a>
+    </div>
+    <div class="team-section-image-wrapper">
+      <img src="team3.png" alt="Barista" class="team-section-image"/>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+    <div class="footer-nav">
+      <a href="overview.html" class="footer-link">Overview</a>
+      <a href="menu.html" class="footer-link">Menu</a>
+      <a href="#" class="footer-link">Review</a>
+      <a href="#" class="footer-link">Event</a>
+      <a href="#" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-brand-social">
+    <div class="footer-brand">AUDIOBITES</div>
+    <div class="footer-social">
+      <a href="www.instagram.com" class="footer-icon"><img src="instagram-svgrepo-com.svg" alt="Instagram" /></a>
+      <a href="www.facebook.com" class="footer-icon"><img src="facebook-svgrepo-com (1).svg" alt="Facebook" /></a>
+      <a href="www.twitter.com" class="footer-icon"><img src="twitter-svgrepo-com.svg" alt="Twitter" /></a>
+      <a href="www.youtube.com" class="footer-icon"><img src="youtube-svgrepo-com.svg" alt="YouTube" /></a>
+    </div>
+    </div>
+    <form class="footer-newsletter">
+      <label for="newsletter-email">Sign up to our newsletter</label>
+      <input type="text" id="newsletter-email" placeholder="Enter Email" style="background-color: transparent;border-width: 0px;" />
+    </form>
+  </footer>
+</div>
+</body>
+<script>
+  // Carousel scroll functionality
+  const carousel = document.querySelector('.custom-carousel');
+  const leftBtn = document.querySelectorAll('.team-button')[0];
+  const rightBtn = document.querySelectorAll('.team-button')[1];
+  // Find the width of one carousel item (including gap)
+  function getScrollAmount() {
+    const item = carousel.querySelector('.carousel-item');
+    if (!item) return 250;
+    const style = window.getComputedStyle(item);
+    const gap = parseInt(style.marginRight || 0) + 30; // fallback to 30px gap
+    return item.offsetWidth + gap;
+  }
+  leftBtn.addEventListener('click', () => {
+    carousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+  rightBtn.addEventListener('click', () => {
+    carousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+
+  // Animate team sections on scroll
+  document.addEventListener("DOMContentLoaded", () => {
+  const target = document.querySelector("#team-main-content");
+  const teamSections = document.querySelectorAll(".team-section");
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        teamSections.forEach((el, i) => {
+          setTimeout(() => el.classList.add("animate"), i * 500); // staggered
+        });
+        observer.unobserve(entry.target); // only once
+      }
+    });
+  }, { threshold: 0.2 });
+
+  observer.observe(target);
+});
+
+// check out not found
+function checkOutNotFound(){
+  alert("Please place an order first");
+}
+//refresh to top
+window.onbeforeunload = () => {
+  window.scrollTo(0, 0);
+};
+</script>
+</html>
