@@ -1,65 +1,124 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import Navbar from "@/components/Navbar";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    // Scroll to top on mount
+    window.scrollTo(0, 0);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate heading
+            if (headingRef.current) {
+              headingRef.current.style.transition = "all 3s ease";
+              headingRef.current.style.opacity = "1";
+              headingRef.current.style.transform = "translateX(0)";
+            }
+
+            // Animate button
+            if (btnRef.current) {
+              btnRef.current.style.transition = "opacity 3s ease-in-out 0.5s";
+              btnRef.current.style.opacity = "1";
+            }
+
+            if (sectionRef.current) {
+              observer.unobserve(sectionRef.current);
+            }
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      <Navbar />
+
+      {/* Home Section */}
+      <section
+        id="page-home"
+        className="min-h-screen flex flex-col justify-center items-center text-center relative overflow-hidden bg-black text-white selection:bg-[#C4AE45] selection:text-black"
+      >
+        <div className="relative w-[350px] h-[350px] mb-[30px]">
+          <Image
+            src="/LOGO2.svg"
+            alt="AUDIOBITES Logo"
+            fill
+            priority
+            className="object-contain relative z-10 drop-shadow-[0_0_10px_rgba(60,96,132,0.854)] animate-float"
+          />
+          <svg className="absolute top-0 left-0 w-full h-full z-0" viewBox="0 0 200 200">
+            <circle className="fill-[#0f0c27] animate-grow" cx="100" cy="100" r="40" />
+          </svg>
+        </div>
+
+        <div className="opacity-0 animate-fade-in relative z-10">
+          <h1
+            className="font-libre text-[80px] text-white mb-[10px]"
+            style={{ textShadow: "5px 4px 10px #c4ae45" }}
+          >
+            AUDIOBITES
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="font-love text-[30px] text-white">Where Food Meets Music</p>
+        </div>
+
+        <div className="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-full h-[320px] bg-gradient-to-r from-[#43116A] to-[#0A1832] rounded-full blur-[50px] z-0"></div>
+      </section>
+
+      {/* General Section */}
+      <section
+        id="page-general"
+        ref={sectionRef}
+        className="bg-gradient-to-b from-[#d4af37] to-[#350f0f] text-white min-h-screen flex justify-between items-center relative overflow-hidden px-8 m-0 p-0"
+      >
+        <div className="max-w-[600px] ml-[150px] relative z-10 w-full">
+          <h1
+            ref={headingRef}
+            className="font-abril text-[100px] leading-[1.1] mb-5 text-white opacity-0 -translate-x-[90px]"
+          >
+            Craving flavors
+            <br />
+            That SING?
+          </h1>
+          <p className="font-almendra text-[50px] mb-10 text-white leading-tight">
+            Let your taste buds and soul harmonize here
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            ref={btnRef}
+            onClick={() => router.push("/team")}
+            className="bg-transparent border-2 border-[#C4AE45] text-[#C4AE45] px-7 py-3 text-lg rounded-lg cursor-pointer transition-all duration-300 hover:bg-[#C4AE45] hover:text-black relative left-[100px] opacity-0"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Explore
+          </button>
         </div>
-      </main>
-    </div>
+        <div className="relative z-10 mr-[100px] flex-shrink-0">
+          <Image
+            src="/gen-01.svg"
+            alt="Illustration"
+            width={600}
+            height={600}
+            className="w-[600px] h-auto block mb-[50px]"
+          />
+        </div>
+      </section>
+    </>
   );
 }

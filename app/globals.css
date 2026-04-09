@@ -10,6 +10,35 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
+  --font-elsie: var(--font-elsie);
+  --font-abril: var(--font-abril);
+  --font-almendra: var(--font-almendra);
+  --font-libre: var(--font-libre);
+  --font-love: var(--font-love);
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-grow: grow 1.6s ease-in-out infinite alternate;
+  --animate-fade-in: fadeIn 2s ease-in-out 1s forwards;
+  --animate-slide-right: slideRight 3s ease forwards;
+  
+  @keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes grow {
+    from { r: 40; opacity: 0.6; }
+    to { r: 70; opacity: 0.2; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideRight {
+    from { transform: translateX(-90px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
